@@ -47,7 +47,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
         | jq -r 'map(select(.prerelease == false)) | .[0].tag_name')
       NEW_VERSION="''${TAG#dwproton-}"
 
-      CURRENT_VERSION=$(sed -n 's/.*version = "\(.*\)".*/\1/p' "$PKG_FILE")
+      CURRENT_VERSION=$(nix eval --raw .#dwproton-bin.version)
 
       if [ "$NEW_VERSION" = "$CURRENT_VERSION" ]; then
         echo "dwproton is already up to date ($CURRENT_VERSION)"
@@ -58,9 +58,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
       RAW=$(nix-prefetch-url --type sha256 --unpack "$URL")
       SRI=$(nix hash convert --hash-algo sha256 "$RAW")
-
-      sed -i "s/version = \"$CURRENT_VERSION\"/version = \"$NEW_VERSION\"/" "$PKG_FILE"
-      sed -i "s#hash = \"sha256-[^\"]*\"#hash = \"$SRI\"#" "$PKG_FILE"
+      sed -i "s|^  version = \".*\";|  version = \"$NEW_VERSION\";|" "$PKG_FILE"
+      sed -i "s|^  hash = \"sha256-.*\";|  hash = \"$SRI\";|" "$PKG_FILE"
 
       echo "dwproton $CURRENT_VERSION -> $NEW_VERSION ($SRI)"
     '';
