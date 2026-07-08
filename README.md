@@ -40,5 +40,5 @@ nix run .#update-dwproton
 
 ## License
 
-dwproton itself is BSD-3-Clause, Copyright (c) 2018-2022 Valve Corporation.
-This flake's own packaging code carries no separate license claim beyond that.
+dwproton itself is BSD-3-Clause, Copyright (c) 2018-2022 Valve Corporation.  
+This flake's own packaging code carries no separate license claim beyond that. ([The Unlicense](LICENSE))
