@@ -2,7 +2,7 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "dwproton-bin";
-  version = "11.0-4";
+  version = "11.0-5";
   hash = "sha256-2x4xotJ2aJYbg+G2TDPqyU7uuoc/hZQon9CA6SFGin0=";
 
   src = fetchzip {
