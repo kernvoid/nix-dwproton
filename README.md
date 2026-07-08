@@ -13,7 +13,7 @@ Nix packaging for [dwproton](https://dawn.wine/dawn-winery/dwproton).
 
 ```nix
 {
-  inputs.nix-dwproton.url = "https://codeberg.org/kernvoid/nix-dwproton";
+  inputs.nix-dwproton.url = "git+https://codeberg.org/kernvoid/nix-dwproton.git";
 
   outputs = { self, nixpkgs, nix-dwproton, ... }: {
     nixosConfigurations.yourhost = nixpkgs.lib.nixosSystem {
