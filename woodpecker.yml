@@ -1,0 +1,35 @@
+# https://woodpecker-ci.org/docs/usage/cron
+
+when:
+  event: cron
+  cron: "update-dwproton"
+
+steps:
+  update:
+    image: nixos/nix:latest
+    commands:
+      - export NIX_CONFIG="experimental-features = nix-command flakes"
+      # 基础镜像不一定带 ssh 客户端,推送要用,这里装一份
+      - nix profile install nixpkgs#openssh
+      - nix run .#update-dwproton
+      - |
+        if git diff --quiet -- pkgs/dwproton-bin/default.nix; then
+          echo "no update, nothing to push"
+          exit 0
+        fi
+        NEW_VERSION=$(sed -n 's/.*version = "\(.*\)".*/\1/p' pkgs/dwproton-bin/default.nix)
+
+        mkdir -p ~/.ssh
+        echo "$SSH_DEPLOY_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        ssh-keyscan codeberg.org >> ~/.ssh/known_hosts 2>/dev/null
+
+        git config user.name "woodpecker-ci"
+        git config user.email "ci@kernvoid.com"
+        git add pkgs/dwproton-bin/default.nix
+        git commit -m "dwproton: bump to $NEW_VERSION"
+        git remote set-url origin git@codeberg.org:kernvoid/nix-dwproton.git
+        git push origin HEAD:main
+    environment:
+      SSH_DEPLOY_KEY:
+        from_secret: ssh_deploy_key
