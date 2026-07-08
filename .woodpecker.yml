@@ -10,8 +10,6 @@ steps:
     image: nixos/nix:latest
     commands:
       - export NIX_CONFIG="experimental-features = nix-command flakes"
-      # 基础镜像不一定带 ssh 客户端,推送要用,这里装一份
-      - nix profile install nixpkgs#openssh
       - nix run .#update-dwproton
       - |
         if git diff --quiet -- pkgs/dwproton-bin/default.nix; then
