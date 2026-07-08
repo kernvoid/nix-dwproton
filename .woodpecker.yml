@@ -16,7 +16,7 @@ steps:
           echo "no update, nothing to push"
           exit 0
         fi
-        NEW_VERSION=$(sed -n 's/.*version = "\(.*\)".*/\1/p' pkgs/dwproton-bin/default.nix)
+        NEW_VERSION=$(nix eval --raw .#dwproton-bin.version)
 
         mkdir -p ~/.ssh
         echo "$SSH_DEPLOY_KEY" > ~/.ssh/id_ed25519
