@@ -1,8 +1,9 @@
 # https://woodpecker-ci.org/docs/usage/cron
 
 when:
-  event: cron
-  cron: "update-dwproton"
+  - event: cron
+    cron: "update-dwproton"
+  - event: manual
 
 steps:
   update:
