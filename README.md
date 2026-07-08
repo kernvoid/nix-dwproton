@@ -40,8 +40,8 @@ nix run .#update-dwproton
 
 ## License
 
-**This Flake (Packaging Code)**
+**This Flake (Packaging Code)**  
 The Nix expressions, flake configurations, and related packaging scripts in this repository are released into the public domain under The Unlicense. You are free to use, modify, and distribute this packaging code without restriction.
 
-**DW-Proton (The Packaged Software)**
+**DW-Proton (The Packaged Software)**  
 DW-Proton itself is subject to its original upstream licenses (BSD/LGPL/etc.).)
