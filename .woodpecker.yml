@@ -5,9 +5,15 @@ when:
     cron: "update-dwproton"
   - event: manual
 
+clone:
+  git:
+    image: woodpeckerci/plugin-git
+    settings:
+      depth: 1
+
 steps:
   update:
-    image: nixos/nix:latest
+    image: nixos/nix:2.32.8
     commands:
       - export NIX_CONFIG="experimental-features = nix-command flakes"
       - nix run .#update-dwproton
