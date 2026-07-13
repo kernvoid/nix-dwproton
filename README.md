@@ -11,6 +11,8 @@ Nix packaging for [dwproton](https://dawn.wine/dawn-winery/dwproton).
 
 ## Usage
 
+### Method 1
+
 ```nix
 {
   inputs.nix-dwproton.url = "git+https://codeberg.org/kernvoid/nix-dwproton.git";
@@ -29,14 +31,44 @@ Nix packaging for [dwproton](https://dawn.wine/dawn-winery/dwproton).
   };
 }
 ```
-
 `programs.dwproton.enable = true` sets `dwproton-bin` to `programs.steam.extraCompatPackages`.
+
+### Method 2
+If you prefer to manage your Steam compatibility tools manually without importing a global module, you can pass the flake inputs to your modules and reference the package directly:
+
+```nix
+{
+  inputs.nix-dwproton.url = "git+https://codeberg.org/kernvoid/nix-dwproton.git";
+
+  outputs = { self, nixpkgs, nix-dwproton, ... }@inputs: {
+    nixosConfigurations.yourhost = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; }; # Pass inputs to other modules
+      modules = [
+        ({ inputs, pkgs, ... }: {
+          programs.steam = {
+            enable = true;
+            extraCompatPackages = [
+              inputs.nix-dwproton.packages.${pkgs.system}.default
+            ];
+          };
+        })
+      ];
+    };
+  };
+}
+```
 
 ## Updating
 
-```
+This repository automatically checks for new upstream releases once a week via a Woodpecker CI cron job.
+
+To pull the latest version of `dwproton` compiled by the CI into your own NixOS system, simply update your flake lockfile:
+
+```bash
 nix run .#update-dwproton
 ```
+
 
 ## License
 
