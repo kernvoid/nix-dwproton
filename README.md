@@ -66,7 +66,7 @@ This repository automatically checks for new upstream releases once a week via a
 To pull the latest version of `dwproton` compiled by the CI into your own NixOS system, simply update your flake lockfile:
 
 ```bash
-nix run .#update-dwproton
+nix flake update nix-dwproton
 ```
 
 
