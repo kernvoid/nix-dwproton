@@ -66,6 +66,12 @@ If you prefer to manage your Steam compatibility tools manually without importin
 
 This repository automatically checks for new upstream releases once a week via a Woodpecker CI cron job.
 
+To manually trigger an update check, run:
+
+```bash
+nix run .#update-dwproton
+```
+
 To pull the latest version of `dwproton` compiled by the CI into your own NixOS system, simply update your flake lockfile:
 
 ```bash
