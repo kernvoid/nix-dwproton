@@ -1,4 +1,13 @@
-{ lib, stdenvNoCC, fetchzip, writeShellApplication, curl, jq, nix, gnused }:
+{ lib
+, stdenvNoCC
+, fetchzip
+, writeShellApplication
+, curl
+, jq
+, nix
+, gnused
+, steamInternalName ? "dwproton"
+}:
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "dwproton-bin";
@@ -29,6 +38,23 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     rm $steamcompattool/compatibilitytool.vdf
     cp $src/compatibilitytool.vdf $steamcompattool
+    chmod +w $steamcompattool/compatibilitytool.vdf
+    sed -i \
+      -e 's/"dwproton-[^"]*"/"${steamInternalName}"/' \
+      -e '/"display_name"/ s/"[^"]*"[[:space:]]*$/"DW-Proton (${finalAttrs.version})"/' \
+      $steamcompattool/compatibilitytool.vdf
+
+    if ! grep -q '"${steamInternalName}"' $steamcompattool/compatibilitytool.vdf; then
+      echo "error: failed to rewrite compatibilitytool.vdf to a stable key" >&2
+      echo "       upstream's vdf format may have changed - check it by hand" >&2
+      cat $steamcompattool/compatibilitytool.vdf >&2
+      exit 1
+    fi
+    if grep -q 'dwproton-' $steamcompattool/compatibilitytool.vdf; then
+      echo "error: versioned name still present in compatibilitytool.vdf" >&2
+      cat $steamcompattool/compatibilitytool.vdf >&2
+      exit 1
+    fi
 
     runHook postInstall
   '';

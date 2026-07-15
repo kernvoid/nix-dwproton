@@ -22,6 +22,9 @@ steps:
           echo "no update, nothing to push"
           exit 0
         fi
+
+        nix build .#dwproton-bin -L
+
         NEW_VERSION=$(nix eval --raw .#dwproton-bin.version)
 
         mkdir -p ~/.ssh
