@@ -41,7 +41,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     chmod +w $steamcompattool/compatibilitytool.vdf
     sed -i \
       -e 's/"dwproton-[^"]*"/"${steamInternalName}"/' \
-      -e '/"display_name"/ s/"[^"]*"[[:space:]]*$/"DW-Proton (${finalAttrs.version})"/' \
+      -e '/"display_name"/ s/"[^"]*"[[:space:]]*$/"DW-Proton ${finalAttrs.version}"/' \
       $steamcompattool/compatibilitytool.vdf
 
     if ! grep -q '"${steamInternalName}"' $steamcompattool/compatibilitytool.vdf; then
