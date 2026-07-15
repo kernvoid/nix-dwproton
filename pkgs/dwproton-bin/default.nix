@@ -95,6 +95,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "dwproton, a Proton fork maintained by dawn-winery";
     homepage = "https://dawn.wine/dawn-winery/dwproton";
     platforms = [ "x86_64-linux" ];
-    license = lib.licenses.bsd3;
+    license = with lib.licenses; [ bsd3 lgpl21Only mit zlib mpl20 ofl ];
   };
 })
