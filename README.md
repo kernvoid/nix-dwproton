@@ -64,7 +64,7 @@ If you prefer to manage your Steam compatibility tools manually without importin
 
 ## Updating
 
-This repository automatically checks for new upstream releases once a week via a GitHub Actions scheduled workflow.
+This repository automatically checks for new upstream releases once a day via a GitHub Actions scheduled workflow.
 
 To manually trigger an update check, run:
 
