@@ -51,8 +51,8 @@ If you prefer to manage your Steam compatibility tools manually without importin
         ({ inputs, pkgs, ... }: {
           programs.steam = {
             enable = true;
-            extraCompatPackages = [
-              inputs.nix-dwproton.packages.${pkgs.system}.default
+            extraCompatPackages = with pkgs; [
+              nix-dwproton.packages.${stdenv.hostPlatform.system}.default
             ];
           };
         })
