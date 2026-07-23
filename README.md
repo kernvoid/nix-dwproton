@@ -18,7 +18,7 @@ Unofficial, not affiliated with dawn-winery or Valve. dwproton itself carries it
 
 ```nix
 {
-  inputs.nix-dwproton.url = "git+https://codeberg.org/kernvoid/nix-dwproton.git";
+  inputs.nix-dwproton.url = "github:kernvoid/nix-dwproton";
 
   outputs = { self, nixpkgs, nix-dwproton, ... }: {
     nixosConfigurations.yourhost = nixpkgs.lib.nixosSystem {
@@ -41,7 +41,7 @@ If you prefer to manage your Steam compatibility tools manually without importin
 
 ```nix
 {
-  inputs.nix-dwproton.url = "git+https://codeberg.org/kernvoid/nix-dwproton.git";
+  inputs.nix-dwproton.url = "github:kernvoid/nix-dwproton";
 
   outputs = { self, nixpkgs, nix-dwproton, ... }@inputs: {
     nixosConfigurations.yourhost = nixpkgs.lib.nixosSystem {
@@ -64,7 +64,7 @@ If you prefer to manage your Steam compatibility tools manually without importin
 
 ## Updating
 
-This repository automatically checks for new upstream releases once a week via a Woodpecker CI cron job.
+This repository automatically checks for new upstream releases once a week via a GitHub Actions scheduled workflow.
 
 To manually trigger an update check, run:
 
